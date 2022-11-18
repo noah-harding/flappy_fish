@@ -1,4 +1,5 @@
 import pygame
+
 import sys
 from fish import Fish
 from random import randint
@@ -33,30 +34,11 @@ rock_rect = rock.get_rect()
 num_tiles = screen_rect.width // water_top_rect.width
 fish = Fish(screen)
 
-#for x in range(num_tiles):   Attempt to simplify the blit process
-    #for y in range():
-        #screen.blit(water_full, (x*water_full_rect.width, y*water_full_rect.height))
-
-
-#screen.blit(main_fish, (main_fish_rect))
-
-
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.K_UP:
-            fish.moving_up = True
-            print("moving up")
-        if event.type == pygame.K_DOWN:
-            fish.moving_down = True
-        if event.type == pygame.QUIT:
-            sys.exit()
-
-    fish.update()
-    
+def draw_background():
     screen.fill((120, 181, 250))
     for y in range(num_tiles):
         for x in range(num_tiles):
-            screen.blit(water_top, (x * water_top_rect.width, 64))
+            screen.blit(water_top, (x*water_top_rect.width, 64))
             screen.blit(water_full, (x * water_full_rect.width, y * water_full_rect.height + 128))
             screen.blit(sand_full, (x * sand_full_rect.width, 896))
             screen.blit(sand_convex, (64, 832))
@@ -91,5 +73,21 @@ while True:
             screen.blit(rock, (5, 777))
             screen.blit(rock, (1408, 777))
 
+
+clock = pygame.time.Clock()
+while True:
+    print("here")
+    for event in pygame.event.get():
+        if event.type == pygame.K_UP:
+            fish.moving_up = True
+            print("moving up")
+        if event.type == pygame.K_DOWN:
+            fish.moving_down = True
+        if event.type == pygame.QUIT:
+            sys.exit()
+
+    fish.update()
+    draw_background()
     fish.blitme()
     pygame.display.flip()
+    clock.tick(60)

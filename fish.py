@@ -16,9 +16,9 @@ class Fish:
         self.moving_down = False
 
     def update(self):
-        if self.moving_up and self.rect.up < 0:
+        if self.moving_up:
             self.y += 1
-        if self.moving_down and self.rect.down > self.screen_rect.height:
+        if self.moving_down:
             self.y -= 1
 
         self.rect.y = self.y
