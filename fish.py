@@ -1,5 +1,4 @@
 import pygame
-import sys
 
 class Fish:
 
@@ -16,10 +15,10 @@ class Fish:
         self.moving_down = False
 
     def update(self):
-        if self.moving_up:
-            self.y += 1
+        if self.moving_up :
+            self.y -= 6
         if self.moving_down:
-            self.y -= 1
+            self.y += 6
 
         self.rect.y = self.y
 

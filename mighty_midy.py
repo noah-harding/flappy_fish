@@ -33,61 +33,64 @@ rock_rect = rock.get_rect()
 
 num_tiles = screen_rect.width // water_top_rect.width
 fish = Fish(screen)
+background = pygame.surface.Surface((screen_rect.width, screen_rect.height))
 
-def draw_background():
-    screen.fill((120, 181, 250))
-    for y in range(num_tiles):
-        for x in range(num_tiles):
-            screen.blit(water_top, (x*water_top_rect.width, 64))
-            screen.blit(water_full, (x * water_full_rect.width, y * water_full_rect.height + 128))
-            screen.blit(sand_full, (x * sand_full_rect.width, 896))
-            screen.blit(sand_convex, (64, 832))
-            screen.blit(sand_convex, (192, 832))
-            screen.blit(sand_convex, (320, 832))
-            screen.blit(sand_convex, (448, 832))
-            screen.blit(sand_convex, (576, 832))
-            screen.blit(sand_convex, (704, 832))
-            screen.blit(sand_convex, (832, 832))
-            screen.blit(sand_convex, (960, 832))
-            screen.blit(sand_convex, (1088, 832))
-            screen.blit(sand_convex, (1216, 832))
-            screen.blit(sand_convex, (1344, 832))
-            screen.blit(sand_convex, (1472, 832))
-            screen.blit(sand_concave, (0, 832))
-            screen.blit(sand_concave, (128, 832))
-            screen.blit(sand_concave, (256, 832))
-            screen.blit(sand_concave, (384, 832))
-            screen.blit(sand_concave, (512, 832))
-            screen.blit(sand_concave, (640, 832))
-            screen.blit(sand_concave, (768, 832))
-            screen.blit(sand_concave, (896, 832))
-            screen.blit(sand_concave, (1024, 832))
-            screen.blit(sand_concave, (1152, 832))
-            screen.blit(sand_concave, (1280, 832))
-            screen.blit(sand_concave, (1408, 832))
-            screen.blit(sand_concave, (1536, 832))
-            screen.blit(green_seaweed, (128, 777))
-            screen.blit(green_seaweed, (1088, 771))
-            screen.blit(purple_seaweed, (512, 777))
-            screen.blit(dead_fish, (756, 850))
-            screen.blit(rock, (5, 777))
-            screen.blit(rock, (1408, 777))
+background.fill((120, 181, 250))
+for y in range(num_tiles):
+    for x in range(num_tiles):
+        background.blit(water_top, (x*water_top_rect.width, 64))
+        background.blit(water_full, (x * water_full_rect.width, y * water_full_rect.height + 128))
+        background.blit(sand_full, (x * sand_full_rect.width, 896))
+background.blit(sand_convex, (64, 832))
+background.blit(sand_convex, (192, 832))
+background.blit(sand_convex, (320, 832))
+background.blit(sand_convex, (448, 832))
+background.blit(sand_convex, (576, 832))
+background.blit(sand_convex, (704, 832))
+background.blit(sand_convex, (832, 832))
+background.blit(sand_convex, (960, 832))
+background.blit(sand_convex, (1088, 832))
+background.blit(sand_convex, (1216, 832))
+background.blit(sand_convex, (1344, 832))
+background.blit(sand_convex, (1472, 832))
+background.blit(sand_concave, (0, 832))
+background.blit(sand_concave, (128, 832))
+background.blit(sand_concave, (256, 832))
+background.blit(sand_concave, (384, 832))
+background.blit(sand_concave, (512, 832))
+background.blit(sand_concave, (640, 832))
+background.blit(sand_concave, (768, 832))
+background.blit(sand_concave, (896, 832))
+background.blit(sand_concave, (1024, 832))
+background.blit(sand_concave, (1152, 832))
+background.blit(sand_concave, (1280, 832))
+background.blit(sand_concave, (1408, 832))
+background.blit(sand_concave, (1536, 832))
+background.blit(green_seaweed, (128, 777))
+background.blit(green_seaweed, (1088, 771))
+background.blit(purple_seaweed, (512, 777))
+background.blit(dead_fish, (756, 850))
+background.blit(rock, (5, 777))
+background.blit(rock, (1408, 777))
 
 
 clock = pygame.time.Clock()
 while True:
-    print("here")
+
     for event in pygame.event.get():
-        if event.type == pygame.K_UP:
-            fish.moving_up = True
-            print("moving up")
-        if event.type == pygame.K_DOWN:
-            fish.moving_down = True
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                fish.moving_up = True
+            if event.key == pygame.K_DOWN:
+                fish.moving_down = True
+        if event.type == pygame.KEYUP:
+            fish.moving_up = False
+            fish.moving_down = False
         if event.type == pygame.QUIT:
             sys.exit()
 
     fish.update()
-    draw_background()
+    screen.blit(background, (0,0))
     fish.blitme()
     pygame.display.flip()
     clock.tick(60)
