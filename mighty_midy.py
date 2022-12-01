@@ -24,27 +24,26 @@ sand_full_rect = sand_full.get_rect()
 
 obsticle = Obsticales()
 health_item = Health()
-def hit_obsticle():
-    collision_range = 10
-    if obsticle.rect.colliderect(fish.rect):
-        if abs(fish.rect.top - obsticle.rect.bottom) < collision_range:
-            fish.moving_up = False
-            print("collide")
-            return True
-        if abs(fish.rect.bottom - obsticle.rect.top) < collision_range:
-            fish.moving_down = False
-            print("collide")
-            return True
-        if abs(fish.rect.right - obsticle.rect.left) < collision_range:
-            fish.moving_up = False
-            fish.moving_down = False
-            print("collide")
-            return True
-    else:
-        return False
+# def hit_obsticle():
+#     collision_range = 10
+#     if obsticle.rect.colliderect(fish.rect):
+#         if abs(fish.rect.top - obsticle.rect.bottom) < collision_range:
+#             fish.moving_up = False
+#             print("collide")
+#             return True
+#         if abs(fish.rect.bottom - obsticle.rect.top) < collision_range:
+#             fish.moving_down = False
+#             print("collide")
+#             return True
+#         if abs(fish.rect.right - obsticle.rect.left) < collision_range:
+#             fish.moving_up = False
+#             fish.moving_down = False
+#             print("collide")
+#             return True
+#     else:
+#         return False
 
 
-#num_tiles = screen_rect.width // water_top_rect.width
 fish = Fish(screen)
 
 background = pygame.surface.Surface((screen_rect.width, screen_rect.height))
@@ -68,17 +67,20 @@ while True:
                 fish.moving_up = True
             if event.key == pygame.K_DOWN:
                 fish.moving_down = True
+            if event.key == pygame.K_RIGHT:
+                fish.moving_right = True
+            if event.key == pygame.K_LEFT:
+                fish.moving_left = True
         if event.type == pygame.KEYUP:
             fish.moving_up = False
             fish.moving_down = False
         if event.type == pygame.QUIT:
             sys.exit()
 
-    fish.update()
+    fish.update(obsticle)
     obsticle.update()
     health_item.update()
-    hit_obsticle()
-    screen.blit(background, (0,0))
+    screen.blit(background, (0, 0))
     fish.blitme()
     obsticle.draw_obsticle(screen)
     health_item.draw_health_item(screen)

@@ -11,7 +11,7 @@ class Obsticales(Sprite):
         self.rect.x = settings.SCREEN_WIDTH
 
     def update(self):
-        self.rect.x -= 10
+        self.rect.x -= 15
         if self.rect.x < 0:
             self.rect.x = settings.SCREEN_WIDTH
 
