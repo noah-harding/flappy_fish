@@ -1,12 +1,19 @@
 import pygame
+from pygame.sprite import Sprite
+import settings
+class Obsticales(Sprite):
 
-class Obsticales:
-
-    def __init__(self, screen):
-        self.screen = screen
-        self.screen_rect = screen.get_rect()
-        self.image = pygame.image.load("images/kenney_simplifiedplatformer/PNG/Tiles/platformPack_tile016.png")
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.surface.Surface((64, 200))
         self.rect = self.image.get_rect()
+        self.color = (50, 50, 50)
+        self.rect.x = settings.SCREEN_WIDTH
 
-    def build_obsticale(self):
-        self.rect
+    def update(self):
+        self.rect.x -= 10
+        if self.rect.x < 0:
+            self.rect.x = settings.SCREEN_WIDTH
+
+    def draw_obsticle(self, screen):
+        screen.blit(self.image, self.rect)

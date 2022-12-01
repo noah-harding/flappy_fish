@@ -14,13 +14,18 @@ class Fish:
         self.moving_up = False
         self.moving_down = False
 
+        self.lives = 3
     def update(self):
-        if self.moving_up and self.rect.top > 64:
+        if self.moving_up and self.rect.top > 0:
             self.y -= 6
         if self.moving_down and self.rect.bottom < self.screen_rect.height - 64:
             self.y += 6
-
         self.rect.y = self.y
+
+
+    def check_collision(self):
+        if hit_obsticle:
+            self.lives -= 1
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
