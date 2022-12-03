@@ -1,19 +1,20 @@
 import pygame
 from pygame.sprite import Sprite
 import settings
-class Obsticales(Sprite):
+from random import randint
+class Obsticale(Sprite):
 
-    def __init__(self):
+    def __init__(self, position):
         super().__init__()
         self.image = pygame.surface.Surface((64, 200))
         self.rect = self.image.get_rect()
         self.color = (50, 50, 50)
-        self.rect.x = settings.SCREEN_WIDTH
+        self.rect.center = position
 
     def update(self):
-        self.rect.x -= 15
+        self.rect.x -= settings.OBSTICALE_SPEED
         if self.rect.x < 0:
             self.rect.x = settings.SCREEN_WIDTH
 
-    def draw_obsticle(self, screen):
+    def draw(self, screen):
         screen.blit(self.image, self.rect)
