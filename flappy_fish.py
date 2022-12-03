@@ -7,6 +7,7 @@ from pygame import mixer
 import settings
 from obsticale import Obsticale
 from health import Health
+from timer import Timer
 
 pygame.init()
 
@@ -32,7 +33,7 @@ obsticales = pygame.sprite.Group(Obsticale((settings.SCREEN_WIDTH, 50)),
                                  Obsticale((settings.SCREEN_WIDTH + 400, 500)),
                                  Obsticale((settings.SCREEN_WIDTH + 800, 600)),
                                  Obsticale((settings.SCREEN_WIDTH + 1300, 700)),
-                                 Obsticale((settings.SCREEN_WIDTH + 1200, 200)),
+                                 Obsticale((settings.SCREEN_WIDTH + 1200, 250)),
                                  Obsticale((settings.SCREEN_WIDTH + 1400, 400)))
 
 power_ups = pygame.sprite.Group(Health((settings.SCREEN_WIDTH + 500, 200)),
@@ -51,16 +52,11 @@ mixer.init()
 mixer.music.load("sounds/summer.mp3")
 mixer.music.set_volume(0.3)
 mixer.music.play()
-
-font = pygame.font.Font(None, 80)
-frame_count = 0
-frame_rate = 60
-start_time = 0
-
+timer = Timer()
 game_over = False
 
 while not game_over:
-
+    # check for events
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
@@ -79,28 +75,16 @@ while not game_over:
         if event.type == pygame.QUIT:
             sys.exit()
 
+    # update objects
     fish.update(obsticales, power_ups)
     obsticales.update()
     power_ups.update(fish)
+
+    # blit objects
     screen.blit(background, (0, 0))
-    total_seconds = frame_count // frame_rate
-    minutes = total_seconds // 60
-    seconds = total_seconds % 60
-    time_display = "{0:02}:{1:02}".format(minutes, seconds)
     fish.blitme()
     obsticales.draw(screen)
     power_ups.draw(screen)
-    text = font.render(time_display, True, (227, 124, 7))
-    screen.blit(text, (20, 20))
-    total_seconds = start_time + (frame_count // frame_rate)
-    frame_count += 1
-    if total_seconds > 5:
-        settings.OBSTICALE_SPEED = 8
-    if total_seconds > 10:
-        settings.OBSTICALE_SPEED = 11
-    if total_seconds > 15:
-        settings.OBSTICALE_SPEED = 14
-    if total_seconds > 15:
-        settings.OBSTICALE_SPEED = 14
-    clock.tick(frame_rate)
+    timer.update(screen)
+    clock.tick(settings.FRAME_RATE)
     pygame.display.flip()

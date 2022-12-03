@@ -37,12 +37,12 @@ class Fish(Sprite):
         # check if we hit a power up
         for power_up in power_ups:
             if pygame.sprite.collide_rect(self, power_up) and settings.COLLISION_COUNTER <= 1:
-                settings.FISH_SPEED += 1
+                settings.FISH_SPEED += 4
                 settings.COLLISION_COUNTER += 1
                 print("power up!")
 
         # check if the fish is off the screen
-        if self.rect.left <= 0:
+        if self.rect.left <= -60:
             self.lives = 0
             print("ouch")
 
