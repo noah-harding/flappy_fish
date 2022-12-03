@@ -7,7 +7,7 @@ from pygame import mixer
 import settings
 from obsticale import Obsticale
 from health import Health
-from timing import Timer
+from timer import Timer
 
 pygame.init()
 
