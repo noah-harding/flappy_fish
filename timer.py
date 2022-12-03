@@ -24,3 +24,5 @@ class Timer(Sprite):
             settings.OBSTICALE_SPEED = 14
         if total_seconds > 40:
             settings.OBSTICALE_SPEED = 17
+        if total_seconds > 60:
+            settings.OBSTICALE_SPEED = 20
