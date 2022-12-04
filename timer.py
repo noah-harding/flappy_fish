@@ -25,6 +25,12 @@ class Timer(Sprite):
             settings.OBSTICALE_SPEED = 17
         if total_seconds >= 60:
             settings.OBSTICALE_SPEED = 20
+        if total_seconds >= 70:
+            settings.OBSTICALE_SPEED = 23
+        if total_seconds >= 80:
+            settings.OBSTICALE_SPEED = 26
+        if total_seconds >= 90:
+            settings.OBSTICALE_SPEED = 29
 
     def draw(self, screen):
         time_display = "{0:02}:{1:02}".format(self.minutes, self.seconds)
