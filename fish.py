@@ -42,7 +42,7 @@ class Fish(Sprite):
                 print("power up!")
 
         # check if the fish is off the screen
-        if self.rect.left <= -60:
+        if self.rect.left <= -55:
             self.lives = 0
             print("ouch")
 

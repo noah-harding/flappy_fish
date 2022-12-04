@@ -1,10 +1,9 @@
 import pygame
-from sea_floor import SeaFloor
 import sys
-from fish import Fish
-from random import randint
-from pygame import mixer
 import settings
+from pygame import mixer
+from random import randint
+from fish import Fish
 from obsticale import Obsticale
 from health import Health
 from timer import Timer
@@ -13,6 +12,18 @@ pygame.init()
 
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
+
+
+def main_menu():
+    pygame.display.set_caption("Main Menu")
+
+    while True:
+        screen.blit(0, 0, 0)
+        menu_mouse_pos = pygame.mouse.get_pos()
+        menu_text = get_font(100).render("MAIN MENU", True, "#b68f40")
+        menu_rect = menu_text.get_rect(center=(settings.SCREEN_WIDTH/2, 100))
+
+        play_button = Button(image=pygame.image.load(images/))
 pygame.display.set_caption("Flappy Fish")
 screen_rect = screen.get_rect()
 water_top = pygame.image.load("images/water_tile.png")
@@ -37,7 +48,7 @@ obsticales = pygame.sprite.Group(Obsticale((settings.SCREEN_WIDTH, 50)),
                                  Obsticale((settings.SCREEN_WIDTH + 1400, 400)))
 
 power_ups = pygame.sprite.Group(Health((settings.SCREEN_WIDTH + 500, 200)),
-                                Health((settings.SCREEN_WIDTH, 700)))
+                                Health((settings.SCREEN_WIDTH + 1000, 800)))
 
 
 
@@ -79,12 +90,16 @@ while not game_over:
     fish.update(obsticales, power_ups)
     obsticales.update()
     power_ups.update(fish)
+    timer.update()
+    for power_up in power_ups.copy():
+        if pygame.sprite.collide_rect(power_up, fish):
+            power_ups.remove(power_up)
 
     # blit objects
     screen.blit(background, (0, 0))
     fish.blitme()
     obsticales.draw(screen)
     power_ups.draw(screen)
-    timer.update(screen)
+    timer.draw(screen)
     clock.tick(settings.FRAME_RATE)
     pygame.display.flip()
