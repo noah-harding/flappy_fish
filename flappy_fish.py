@@ -8,6 +8,7 @@ from obsticale import Obsticale
 from health import Health
 from timer import Timer
 from button import Button
+import time
 
 pygame.init()
 
@@ -102,11 +103,53 @@ def play():
         clock.tick(settings.FRAME_RATE)
         pygame.display.flip()
 
-def options():
-    pygame.display.set_caption("Options")
+def instructions():
+    pygame.display.set_caption("Instructions")
 
     while True:
         screen.fill((128, 242, 255))
+        mixer.music.load("sounds/kenney_interfacesounds/Audio/select_001.ogg")
+        mixer.music.set_volume(0.3)
+        power_up = Health((400, 500))
+        font1 = pygame.font.SysFont("arialblack", 40)
+        font2 = pygame.font.SysFont("cooperblack", 80)
+        font3 = pygame.font.SysFont("arialblack", 35)
+        menu_mouse_pos = pygame.mouse.get_pos()
+        menu_text = font2.render("INSTRUCTIONS", True, (196, 158, 71))
+        menu_rect = menu_text.get_rect(center=(settings.SCREEN_WIDTH / 2, 100))
+        back_button = Button(None, pos=(settings.SCREEN_WIDTH / 13, 100), text_input="< BACK", font=font1, base_color=(0, 0, 0))
+        instructions_text1 = font3.render("* AVOID ONCOMING OBSTACLES!", True, (0, 0, 0))
+        instructions_text2 = font3.render("Use the arrow keys to move forward, backward, up, and down", True, (0, 0, 0))
+        instructions_text3 = font3.render("* COLLECT POWER-UPS!", True, (0, 0, 0))
+        instructions_text4 = font3.render("Collect the power-ups to\n increase your swim speed", True, (0, 0, 0))
+        instructions_text5 = font3.render("* SWIM AS LONG AS YOU CAN!", True, (0, 0, 0))
+        instructions_text6 = font3.render("Swim as long as you can before you get pushed too far", True, (0, 0, 0))
+        instructions_rect1 = instructions_text1.get_rect(center=(settings.SCREEN_WIDTH / 2, 250))
+        instructions_rect2 = instructions_text2.get_rect(center=(settings.SCREEN_WIDTH / 2, 325))
+        instructions_rect3 = instructions_text3.get_rect(center=(settings.SCREEN_WIDTH / 2, 500))
+        instructions_rect4 = instructions_text4.get_rect(center=(settings.SCREEN_WIDTH / 2, 575))
+        instructions_rect5 = instructions_text5.get_rect(center=(settings.SCREEN_WIDTH / 2, 750))
+        instructions_rect6 = instructions_text6.get_rect(center=(settings.SCREEN_WIDTH / 2, 825))
+        screen.blit(menu_text, menu_rect)
+        screen.blit(instructions_text1, instructions_rect1)
+        screen.blit(instructions_text2, instructions_rect2)
+        screen.blit(instructions_text3, instructions_rect3)
+        screen.blit(instructions_text4, instructions_rect4)
+        screen.blit(instructions_text5, instructions_rect5)
+        screen.blit(instructions_text6, instructions_rect6)
+        back_button.update(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if back_button.check_input(menu_mouse_pos):
+                    mixer.music.play()
+                    time.sleep(.3)
+                    main_menu()
+
+        pygame.display.flip()
+
 
 def main_menu():
     pygame.display.set_caption("Main Menu")
@@ -117,18 +160,21 @@ def main_menu():
         font2 = pygame.font.SysFont("cooperblack", 75)
         menu_mouse_pos = pygame.mouse.get_pos()
         menu_text = font1.render("FLAPPY FISH", True, (196, 158, 71))
-        menu_rect = menu_text.get_rect(center=(settings.SCREEN_WIDTH / 2, 100))
+        menu_rect = menu_text.get_rect(center=(settings.SCREEN_WIDTH / 2, 150))
 
         play_button = Button(None, pos=(settings.SCREEN_WIDTH / 2, 300), text_input="PLAY", font=font2,
                              base_color=(0, 0, 0))
-        high_score_button = Button(None, pos=(settings.SCREEN_WIDTH / 2, 500), text_input="HIGH SCORE", font=font2,
+        instructions_button = Button(None, pos=(settings.SCREEN_WIDTH / 2, 500), text_input="INSTRUCTIONS", font=font2,
                                 base_color=(0, 0, 0))
         quit_button = Button(None, pos=(settings.SCREEN_WIDTH / 2, 700), text_input="QUIT", font=font2,
                              base_color=(0, 0, 0))
 
         screen.blit(menu_text, menu_rect)
+        # a sound for mouse clicks
+        mixer.music.load("sounds/kenney_interfacesounds/Audio/select_001.ogg")
+        mixer.music.set_volume(0.3)
 
-        for button in [play_button, high_score_button, quit_button]:
+        for button in [play_button, instructions_button, quit_button]:
             button.update(screen)
 
         for event in pygame.event.get():
@@ -136,11 +182,16 @@ def main_menu():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if play_button.check_input(menu_mouse_pos):
+                    mixer.music.play()
                     pygame.mouse.set_visible(False)
+                    time.sleep(.3)
                     play()
-                if high_score_button.check_input(menu_mouse_pos):
-                    options()
+                if instructions_button.check_input(menu_mouse_pos):
+                    mixer.music.play()
+                    time.sleep(.3)
+                    instructions()
                 if quit_button.check_input(menu_mouse_pos):
+                    mixer.music.play()
                     sys.exit()
         pygame.display.update()
 

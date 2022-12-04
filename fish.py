@@ -1,7 +1,7 @@
 import pygame
 from pygame.sprite import Sprite
 import settings
-
+from pygame import mixer
 class Fish(Sprite):
 
     def __init__(self, screen):
@@ -33,6 +33,7 @@ class Fish(Sprite):
         for obsticale in obsticales:
             if pygame.sprite.collide_rect(self, obsticale):
                 self.rect.right = obsticale.rect.left
+                settings.COLLISION_COUNTER += 1
 
         # check if we hit a power up
         for power_up in power_ups:
@@ -42,7 +43,7 @@ class Fish(Sprite):
                 print("power up!")
 
         # check if the fish is off the screen
-        if self.rect.left <= -55:
+        if self.rect.left <= -30:
             self.lives = 0
             print("ouch")
 
