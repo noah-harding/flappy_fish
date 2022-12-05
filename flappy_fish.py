@@ -11,7 +11,7 @@ from button import Button
 import time
 
 pygame.init()
-
+mixer.init()
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 settings.SCREEN_WIDTH = screen.get_rect().width
@@ -23,7 +23,7 @@ def play():
     water_full_rect = water_full.get_rect()
     sand_full = pygame.image.load("images/kenney_fishpack/PNG/Default size/fishTile_001.png")
     sand_full_rect = sand_full.get_rect()
-
+    # Building a background
     background = pygame.surface.Surface((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
     background.fill((120, 181, 250))
     for y in range(settings.SCREEN_WIDTH // settings.TILE_SIZE):
@@ -31,7 +31,7 @@ def play():
             background.blit(water_full, (x * water_full_rect.width, y * water_full_rect.height))
             background.blit(sand_full, (x * sand_full_rect.width, settings.SCREEN_HEIGHT - settings.TILE_SIZE))
 
-
+    # Creating Sprite Groups
     fish = Fish(screen)
     obsticales = pygame.sprite.Group(Obsticale((settings.SCREEN_WIDTH, 50)),
                                      Obsticale((settings.SCREEN_WIDTH + 200, 910)),
@@ -47,10 +47,12 @@ def play():
                                      Obsticale((settings.SCREEN_WIDTH + 1850, 650)))
 
     power_ups = pygame.sprite.Group(Health((settings.SCREEN_WIDTH + 500, 200)),
-                                    Health((settings.SCREEN_WIDTH + 1000, 800)))
+                                    Health((settings.SCREEN_WIDTH + 3100, 800)),
+                                    Health((settings.SCREEN_WIDTH + 6500, 400)),
+                                    Health((settings.SCREEN_WIDTH + 10000, 560)),
+                                    Health((settings.SCREEN_WIDTH + 13000, 740)))
 
     # music
-    mixer.init()
     mixer.music.load("sounds/summer.mp3")
     mixer.music.set_volume(0.3)
     mixer.music.play()
@@ -86,7 +88,9 @@ def play():
                 sys.exit()
 
         # update objects
-        fish.update(obsticales, power_ups)
+        if fish.update(obsticales, power_ups) == False:
+            game_over = True
+            pygame.mouse.set_visible(True)
         obsticales.update()
         power_ups.update(fish)
         timer.update()
@@ -119,11 +123,11 @@ def instructions():
         menu_rect = menu_text.get_rect(center=(settings.SCREEN_WIDTH / 2, 100))
         back_button = Button(None, pos=(settings.SCREEN_WIDTH / 13, 100), text_input="< BACK", font=font1, base_color=(0, 0, 0))
         instructions_text1 = font3.render("* AVOID ONCOMING OBSTACLES!", True, (0, 0, 0))
-        instructions_text2 = font3.render("Use the arrow keys to move forward, backward, up, and down", True, (0, 0, 0))
+        instructions_text2 = font3.render("use the arrow keys to move forward, backward, up, and down", True, (0, 0, 0))
         instructions_text3 = font3.render("* COLLECT POWER-UPS!", True, (0, 0, 0))
-        instructions_text4 = font3.render("Collect the power-ups to\n increase your swim speed", True, (0, 0, 0))
+        instructions_text4 = font3.render("collect the power-ups to increase your swim speed", True, (0, 0, 0))
         instructions_text5 = font3.render("* SWIM AS LONG AS YOU CAN!", True, (0, 0, 0))
-        instructions_text6 = font3.render("Swim as long as you can before you get pushed too far", True, (0, 0, 0))
+        instructions_text6 = font3.render("swim as long as you can before you get pushed too far", True, (0, 0, 0))
         instructions_rect1 = instructions_text1.get_rect(center=(settings.SCREEN_WIDTH / 2, 250))
         instructions_rect2 = instructions_text2.get_rect(center=(settings.SCREEN_WIDTH / 2, 325))
         instructions_rect3 = instructions_text3.get_rect(center=(settings.SCREEN_WIDTH / 2, 500))

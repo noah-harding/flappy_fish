@@ -50,6 +50,8 @@ class Fish(Sprite):
         # if the fish is off the screen the game is over
         if self.lives == 0:
             print("game over")
+            return False
+        return True
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
