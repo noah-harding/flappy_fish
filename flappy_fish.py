@@ -1,14 +1,14 @@
 import pygame
 import sys
 import settings
+import time
 from pygame import mixer
-from random import randint
 from fish import Fish
 from obsticale import Obsticale
-from health import Health
+from powerup import PowerUp
 from timer import Timer
 from button import Button
-import time
+
 
 pygame.init()
 mixer.init()
@@ -16,6 +16,8 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 settings.SCREEN_WIDTH = screen.get_rect().width
 settings.SCREEN_HEIGHT = screen.get_rect().height
+
+# Making a Play function
 def play():
     pygame.display.set_caption("Flappy Fish")
 
@@ -46,11 +48,11 @@ def play():
                                      Obsticale((settings.SCREEN_WIDTH + 1700, 200)),
                                      Obsticale((settings.SCREEN_WIDTH + 1850, 650)))
 
-    power_ups = pygame.sprite.Group(Health((settings.SCREEN_WIDTH + 500, 200)),
-                                    Health((settings.SCREEN_WIDTH + 3100, 800)),
-                                    Health((settings.SCREEN_WIDTH + 6500, 400)),
-                                    Health((settings.SCREEN_WIDTH + 10000, 560)),
-                                    Health((settings.SCREEN_WIDTH + 13000, 740)))
+    power_ups = pygame.sprite.Group(PowerUp((settings.SCREEN_WIDTH + 500, 200)),
+                                    PowerUp((settings.SCREEN_WIDTH + 3100, 800)),
+                                    PowerUp((settings.SCREEN_WIDTH + 6500, 400)),
+                                    PowerUp((settings.SCREEN_WIDTH + 10000, 560)),
+                                    PowerUp((settings.SCREEN_WIDTH + 13000, 740)))
 
     # music
     mixer.music.load("sounds/summer.mp3")
@@ -60,7 +62,6 @@ def play():
     timer = Timer()
 
     game_over = False
-
     while not game_over:
         # check for events
         for event in pygame.event.get():
@@ -105,8 +106,10 @@ def play():
         power_ups.draw(screen)
         timer.draw(screen)
         clock.tick(settings.FRAME_RATE)
+        # flip display
         pygame.display.flip()
 
+# Making an Instructions page
 def instructions():
     pygame.display.set_caption("Instructions")
 
@@ -114,7 +117,6 @@ def instructions():
         screen.fill((128, 242, 255))
         mixer.music.load("sounds/kenney_interfacesounds/Audio/select_001.ogg")
         mixer.music.set_volume(0.3)
-        power_up = Health((400, 500))
         font1 = pygame.font.SysFont("arialblack", 40)
         font2 = pygame.font.SysFont("cooperblack", 80)
         font3 = pygame.font.SysFont("arialblack", 35)
@@ -122,6 +124,7 @@ def instructions():
         menu_text = font2.render("INSTRUCTIONS", True, (196, 158, 71))
         menu_rect = menu_text.get_rect(center=(settings.SCREEN_WIDTH / 2, 100))
         back_button = Button(None, pos=(settings.SCREEN_WIDTH / 13, 100), text_input="< BACK", font=font1, base_color=(0, 0, 0))
+        # defining instructions' text
         instructions_text1 = font3.render("* AVOID ONCOMING OBSTACLES!", True, (0, 0, 0))
         instructions_text2 = font3.render("use the arrow keys to move forward, backward, up, and down", True, (0, 0, 0))
         instructions_text3 = font3.render("* COLLECT POWER-UPS!", True, (0, 0, 0))
@@ -134,6 +137,7 @@ def instructions():
         instructions_rect4 = instructions_text4.get_rect(center=(settings.SCREEN_WIDTH / 2, 575))
         instructions_rect5 = instructions_text5.get_rect(center=(settings.SCREEN_WIDTH / 2, 750))
         instructions_rect6 = instructions_text6.get_rect(center=(settings.SCREEN_WIDTH / 2, 825))
+        # draw instructions
         screen.blit(menu_text, menu_rect)
         screen.blit(instructions_text1, instructions_rect1)
         screen.blit(instructions_text2, instructions_rect2)
@@ -142,7 +146,7 @@ def instructions():
         screen.blit(instructions_text5, instructions_rect5)
         screen.blit(instructions_text6, instructions_rect6)
         back_button.update(screen)
-
+        # check for events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -154,7 +158,7 @@ def instructions():
 
         pygame.display.flip()
 
-
+# Making a Main Menu
 def main_menu():
     pygame.display.set_caption("Main Menu")
 
@@ -165,7 +169,7 @@ def main_menu():
         menu_mouse_pos = pygame.mouse.get_pos()
         menu_text = font1.render("FLAPPY FISH", True, (196, 158, 71))
         menu_rect = menu_text.get_rect(center=(settings.SCREEN_WIDTH / 2, 150))
-
+        # creating buttons
         play_button = Button(None, pos=(settings.SCREEN_WIDTH / 2, 300), text_input="PLAY", font=font2,
                              base_color=(0, 0, 0))
         instructions_button = Button(None, pos=(settings.SCREEN_WIDTH / 2, 500), text_input="INSTRUCTIONS", font=font2,
@@ -180,7 +184,7 @@ def main_menu():
 
         for button in [play_button, instructions_button, quit_button]:
             button.update(screen)
-
+        # check to see what button was pressed
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -199,5 +203,5 @@ def main_menu():
                     sys.exit()
         pygame.display.update()
 
-
+# calling main menu function
 main_menu()

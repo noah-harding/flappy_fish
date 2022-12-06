@@ -1,9 +1,9 @@
 import pygame
 from pygame.sprite import Sprite
 import settings
-from pygame import mixer
-class Fish(Sprite):
 
+class Fish(Sprite):
+# A class to define my fish
     def __init__(self, screen):
         super().__init__()
         self.screen = screen
@@ -20,6 +20,7 @@ class Fish(Sprite):
         self.lives = 3
 
     def update(self, obsticales, power_ups):
+    # Update my fish by checking for collisions and movement inputs
         if self.moving_up and self.rect.top > 0:
             self.rect.y -= settings.FISH_SPEED
         if self.moving_down and self.rect.bottom < self.screen_rect.height - 64:

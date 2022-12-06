@@ -1,5 +1,6 @@
 
 class Button():
+# A class to define a button
     def __init__(self, image, pos, text_input, font, base_color):
         self.image = image
         self.x_pos = pos[0]
@@ -14,10 +15,12 @@ class Button():
         self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
 
     def update(self, screen):
+        # Drawing the button on the screen
         if self.image is not None:
             screen.blit(self.text, self.text_rect)
 
     def check_input(self, position):
+    # Checking to see if a button was pressed
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
             return True
         return False

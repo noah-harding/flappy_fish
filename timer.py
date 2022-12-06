@@ -3,6 +3,7 @@ import settings
 from pygame.sprite import Sprite
 
 class Timer(Sprite):
+# A class to define a timer
     def __init__(self):
         super().__init__()
         self.font = pygame.font.SysFont("bahnschrift", 80)
@@ -10,6 +11,7 @@ class Timer(Sprite):
         self.seconds = 0
 
     def update(self):
+        # Update my clock every second and increase obstacle speed based on time
         total_seconds = settings.FRAME_COUNT // settings.FRAME_RATE
         self.minutes = total_seconds // 60
         self.seconds = total_seconds % 60
@@ -33,6 +35,7 @@ class Timer(Sprite):
             settings.OBSTICALE_SPEED = 29
 
     def draw(self, screen):
+        # Draw the clock on the screen to count up every second
         time_display = "{0:02}:{1:02}".format(self.minutes, self.seconds)
         text = self.font.render(time_display, True, (227, 124, 7))
         screen.blit(text, (20, 20))

@@ -1,11 +1,9 @@
 import pygame
 from pygame.sprite import Sprite
 import settings
-from random import randint
 
-
-class Health(Sprite):
-
+class PowerUp(Sprite):
+# A class to define power-ups
     def __init__(self, position):
         super().__init__()
         self.image = pygame.image.load("images/kenney_simplifiedplatformer/PNG/Items/platformPack_item010.png")
@@ -14,10 +12,10 @@ class Health(Sprite):
 
 
     def update(self, fish):
+    # Update the power-up across the screen
         self.rect.x -= 3
         if self.rect.x < 0:
             self.rect.x = settings.SCREEN_WIDTH
-
 
 
     def draw(self, screen):
