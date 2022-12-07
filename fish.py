@@ -19,7 +19,7 @@ class Fish(Sprite):
         self.moving_left = False
         self.lives = 3
 
-    def update(self, obsticales, power_ups):
+    def update(self, obsticales, power_ups, timer):
     # Update my fish by checking for collisions and movement inputs
         if self.moving_up and self.rect.top > 0:
             self.rect.y -= settings.FISH_SPEED
@@ -46,7 +46,6 @@ class Fish(Sprite):
         # check if the fish is off the screen
         if self.rect.left <= -30:
             self.lives = 0
-            print("ouch")
 
         # if the fish is off the screen the game is over
         if self.lives == 0:

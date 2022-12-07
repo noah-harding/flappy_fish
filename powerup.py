@@ -17,6 +17,9 @@ class PowerUp(Sprite):
         if self.rect.x < 0:
             self.rect.x = settings.SCREEN_WIDTH
 
+    def reset(self):
+        self.rect.x -= 3
+
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)

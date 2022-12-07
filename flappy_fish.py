@@ -35,6 +35,7 @@ def play():
 
     # Creating Sprite Groups
     fish = Fish(screen)
+    # Obstacles
     obsticales = pygame.sprite.Group(Obsticale((settings.SCREEN_WIDTH, 50)),
                                      Obsticale((settings.SCREEN_WIDTH + 200, 910)),
                                      Obsticale((settings.SCREEN_WIDTH + 250, 200)),
@@ -47,14 +48,14 @@ def play():
                                      Obsticale((settings.SCREEN_WIDTH + 1600, 800)),
                                      Obsticale((settings.SCREEN_WIDTH + 1700, 200)),
                                      Obsticale((settings.SCREEN_WIDTH + 1850, 650)))
-
+    # Power Ups
     power_ups = pygame.sprite.Group(PowerUp((settings.SCREEN_WIDTH + 500, 200)),
                                     PowerUp((settings.SCREEN_WIDTH + 3100, 800)),
                                     PowerUp((settings.SCREEN_WIDTH + 6500, 400)),
                                     PowerUp((settings.SCREEN_WIDTH + 10000, 560)),
                                     PowerUp((settings.SCREEN_WIDTH + 13000, 740)))
 
-    # music
+    # music -- Received help from Riley Haugen
     mixer.music.load("sounds/summer.mp3")
     mixer.music.set_volume(0.3)
     mixer.music.play()
@@ -89,7 +90,8 @@ def play():
                 sys.exit()
 
         # update objects
-        if fish.update(obsticales, power_ups) == False:
+        if fish.update(obsticales, power_ups, timer) == False:
+            timer.reset()
             game_over = True
             pygame.mouse.set_visible(True)
         obsticales.update()

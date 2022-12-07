@@ -9,33 +9,40 @@ class Timer(Sprite):
         self.font = pygame.font.SysFont("bahnschrift", 80)
         self.minutes = 0
         self.seconds = 0
+        self.frame_count = 0
+        self.total_seconds = 0
 
     def update(self):
         # Update my clock every second and increase obstacle speed based on time
-        total_seconds = settings.FRAME_COUNT // settings.FRAME_RATE
-        self.minutes = total_seconds // 60
-        self.seconds = total_seconds % 60
-        total_seconds = settings.START_TIME + (settings.FRAME_COUNT // settings.FRAME_RATE)
-        settings.FRAME_COUNT += 1
-        if total_seconds >= 10:
+        self.frame_count += 1
+        self.total_seconds = self.frame_count // settings.FRAME_RATE
+        self.minutes = self.total_seconds // 60
+        self.seconds = self.total_seconds % 60
+
+        if self.total_seconds >= 10:
             settings.OBSTICALE_SPEED = 8
-        if total_seconds >= 20:
+        if self.total_seconds >= 20:
             settings.OBSTICALE_SPEED = 11
-        if total_seconds >= 30:
+        if self.total_seconds >= 30:
             settings.OBSTICALE_SPEED = 14
-        if total_seconds >= 40:
+        if self.total_seconds >= 40:
             settings.OBSTICALE_SPEED = 17
-        if total_seconds >= 60:
+        if self.total_seconds >= 60:
             settings.OBSTICALE_SPEED = 20
-        if total_seconds >= 70:
+        if self.total_seconds >= 70:
             settings.OBSTICALE_SPEED = 23
-        if total_seconds >= 80:
+        if self.total_seconds >= 80:
             settings.OBSTICALE_SPEED = 26
-        if total_seconds >= 90:
+        if self.total_seconds >= 90:
             settings.OBSTICALE_SPEED = 29
+
+    def reset(self):
+        self.frame_count = 0
+        settings.OBSTICALE_SPEED = 5
+        settings.FISH_SPEED = 8
 
     def draw(self, screen):
         # Draw the clock on the screen to count up every second
         time_display = "{0:02}:{1:02}".format(self.minutes, self.seconds)
         text = self.font.render(time_display, True, (227, 124, 7))
-        screen.blit(text, (20, 20))
+        screen.blit(text, (1700, 20))
