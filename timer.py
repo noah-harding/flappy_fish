@@ -36,7 +36,8 @@ class Timer(Sprite):
         if self.total_seconds >= 90:
             settings.OBSTICALE_SPEED = 29
 
-    def reset(self):
+    def reset(self): # Received help from Riley Haugen
+        # Reset timer, obstacle speed, and fish speed
         self.frame_count = 0
         settings.OBSTICALE_SPEED = 5
         settings.FISH_SPEED = 8

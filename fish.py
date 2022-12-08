@@ -41,13 +41,12 @@ class Fish(Sprite):
             if pygame.sprite.collide_rect(self, power_up) and settings.COLLISION_COUNTER <= 1:
                 settings.FISH_SPEED += 4
                 settings.COLLISION_COUNTER += 1
-                print("power up!")
 
         # check if the fish is off the screen
         if self.rect.left <= -30:
             self.lives = 0
 
-        # if the fish is off the screen the game is over
+        # if the fish is off the screen, the game is over
         if self.lives == 0:
             print("game over")
             return False

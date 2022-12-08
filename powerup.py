@@ -11,15 +11,10 @@ class PowerUp(Sprite):
         self.rect.center = position
 
 
-    def update(self, fish):
-    # Update the power-up across the screen
+    def update(self, fish): # Update the power-up across the screen
         self.rect.x -= 3
         if self.rect.x < 0:
             self.rect.x = settings.SCREEN_WIDTH
-
-    def reset(self):
-        self.rect.x -= 3
-
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)

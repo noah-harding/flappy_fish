@@ -55,7 +55,7 @@ def play():
                                     PowerUp((settings.SCREEN_WIDTH + 10000, 560)),
                                     PowerUp((settings.SCREEN_WIDTH + 13000, 740)))
 
-    # music -- Received help from Riley Haugen
+    # music -- Received help from Rachel Huang
     mixer.music.load("sounds/summer.mp3")
     mixer.music.set_volume(0.3)
     mixer.music.play()
@@ -131,8 +131,8 @@ def instructions():
         instructions_text2 = font3.render("use the arrow keys to move forward, backward, up, and down", True, (0, 0, 0))
         instructions_text3 = font3.render("* COLLECT POWER-UPS!", True, (0, 0, 0))
         instructions_text4 = font3.render("collect the power-ups to increase your swim speed", True, (0, 0, 0))
-        instructions_text5 = font3.render("* SWIM AS LONG AS YOU CAN!", True, (0, 0, 0))
-        instructions_text6 = font3.render("swim as long as you can before you get pushed too far", True, (0, 0, 0))
+        instructions_text5 = font3.render("* BEAT THE CLOCK!", True, (0, 0, 0))
+        instructions_text6 = font3.render("swim as long as you can before you get swept away", True, (0, 0, 0))
         instructions_rect1 = instructions_text1.get_rect(center=(settings.SCREEN_WIDTH / 2, 250))
         instructions_rect2 = instructions_text2.get_rect(center=(settings.SCREEN_WIDTH / 2, 325))
         instructions_rect3 = instructions_text3.get_rect(center=(settings.SCREEN_WIDTH / 2, 500))
