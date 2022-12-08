@@ -92,6 +92,7 @@ def play():
         # update objects
         if fish.update(obsticales, power_ups, timer) == False:
             timer.reset()
+            time.sleep(2)
             game_over = True
             pygame.mouse.set_visible(True)
         obsticales.update()
