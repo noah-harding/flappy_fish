@@ -23,3 +23,6 @@ swim speed by collecting power-ups. Just keep swimming!
 Thank you to my classmate that helped make this game possible.
 - Riley Haugen
 - Rachel Haung
+
+### Gameplay:
+!["screenshot"](images/gameplay.png)
